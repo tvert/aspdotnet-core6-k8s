@@ -14,7 +14,7 @@ namespace GloboTicket.Frontend.Models.View
         public string PostalCode { get; set; } = String.Empty;
         [EmailAddress]
         public string Email { get; set; } = String.Empty;
-        [CreditCard]
+        //[CreditCard]
         public string CreditCard { get; set; } = String.Empty;
         public string CreditCardDate { get; set; } = String.Empty;
     }

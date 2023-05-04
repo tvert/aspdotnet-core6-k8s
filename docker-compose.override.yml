@@ -1,0 +1,38 @@
+version: '3.4'
+
+services:
+  catalog:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection= Server=sqlserver;Database=EventCatalogDb;User=sa;pwd=MyP@ssw0rd!2023;MultipleActiveResultSets=true
+    ports:
+      - "80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+  frontend:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ApiConfigs__ConcertCatalog__Uri=http://catalog
+      - ApiConfigs__Ordering__Uri=http://ordering
+    ports:
+      - "80"
+      - "443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  ordering:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      - ACCEPT_EULA=TRUE
+      - MSSQL_SA_PASSWORD=MyP@ssw0rd!2023
+
