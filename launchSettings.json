@@ -4,9 +4,10 @@
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
       "serviceActions": {
-        "catalog": "StartDebugging",
-        "frontend": "StartDebugging",
-        "ordering": "StartDebugging"
+        "catalog": "StartWithoutDebugging",
+        "frontend": "StartWithoutDebugging",
+        "ordering": "StartWithoutDebugging",
+        "sqlserver": "StartWithoutDebugging"
       }
     }
   }
