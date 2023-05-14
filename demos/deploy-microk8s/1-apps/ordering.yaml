@@ -35,7 +35,7 @@ spec:
     spec:
       containers:
       - name: ordering
-        image: jogloboticket.azurecr.io/ordering
+        image: jorndk8s.azurecr.io/ordering
         resources:
           requests:
             memory: "500Mi"
