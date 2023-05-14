@@ -1,0 +1,54 @@
+# Catalog service
+kind: Service
+apiVersion: v1
+metadata:
+  name: catalog
+  namespace: jowebapp
+  labels:
+    app: catalog
+spec:
+  selector:
+    app: catalog
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 80
+    name: http
+  type: ClusterIP
+---
+# Catalog deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalog
+  namespace: jowebapp
+  labels:
+    app: catalog
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: catalog
+  template:
+    metadata:
+      labels:
+        app: catalog
+    spec:
+      containers:
+      - name: catalog
+        image: jogloboticket.azurecr.io/catalog
+        resources:
+          requests:
+            memory: "500Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "750m"
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+        - name: CONNECTIONSTRINGS__DEFAULTCONNECTION
+          value: Server=sqlserver;Database=EventCatalogDb;User=sa;pwd=P@ssW0rd!;MultipleActiveResultSets=true
+        ports:
+        - containerPort: 80
+        imagePullPolicy: Always
