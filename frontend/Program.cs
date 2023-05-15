@@ -26,7 +26,7 @@ builder.Services.AddHttpClient<IOrderSubmissionService, HttpOrderSubmissionServi
 
 // Adding Health Checks
 builder.Services.AddHealthChecks()
-    .AddCheck<SlowDependencyHealthCheck>("SlowDependencyDemo", tags: new[] { "readyness" })
+    .AddCheck<SlowDependencyHealthCheck>("SlowDependencyDemo", tags: new[] { "readiness" })
     .AddProcessAllocatedMemoryHealthCheck(maximumMegabytesAllocated: 500);
 
 builder.Services.AddSingleton<Settings>();
@@ -51,15 +51,15 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=ConcertCatalog}/{action=Index}/{id?}");
 
-//map the 'readyness' and 'livelyness' probes
-app.MapHealthChecks("/health/readyness",
+//map the 'readiness' and 'liveness' probes
+app.MapHealthChecks("/health/readiness",
     new HealthCheckOptions()
     {
-        Predicate = reg => reg.Tags.Contains("readyness"),
+        Predicate = reg => reg.Tags.Contains("readiness"),
         ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
     });
 
-app.MapHealthChecks("/health/livelyness",
+app.MapHealthChecks("/health/liveness",
     new HealthCheckOptions()
     {
         Predicate = _ => true,
