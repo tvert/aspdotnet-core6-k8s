@@ -46,7 +46,7 @@ public class ConcertCatalogController : Controller
 
     private void RegisterMetricsConcertCatalogHomePageVisits()
     {
-        _concertCatalogHomePageVisits ??= Metrics.CreateCounter("globoticket_frontend_home_page_visits", "Number of Frontend Concerts Home page visited");
+        _concertCatalogHomePageVisits ??= Metrics.CreateCounter("jowebapp_frontend_home_page_visits", "Number of Frontend Concerts Home page visited");
         _concertCatalogHomePageVisits.Inc();
     }
 
@@ -59,7 +59,7 @@ public class ConcertCatalogController : Controller
 
     private void RegisterMetricsConcertCatalogDetailsPageVisits()
     {
-        _concertCatalogDetailsPageVisits ??= Metrics.CreateCounter("globoticket_frontend_details_page_visits", "Number of Frontend Concert's Details page visited");
+        _concertCatalogDetailsPageVisits ??= Metrics.CreateCounter("jowebapp_frontend_details_page_visits", "Number of Frontend Concert's Details page visited");
         _concertCatalogDetailsPageVisits.Inc();
     }
 
