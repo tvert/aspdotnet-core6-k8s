@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    release: kube-prom-stack
+  name: frontend-servicemonitor
+  namespace: jowebapp
+spec:
+  endpoints:
+  - port: http-web
+    path: /metrics
+    scheme: http
+    scrapeTimeout: 30s
+  namespaceSelector:
+    matchNames:
+    - jowebapp
+  selector:
+    matchLabels:
+      app: frontend
