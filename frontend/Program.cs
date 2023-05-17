@@ -5,6 +5,8 @@ using GloboTicket.Frontend.Services.Ordering;
 using GloboTicket.Frontend.Services.ShoppingBasket;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Options;
+using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +25,10 @@ builder.Services.AddHttpClient<IOrderSubmissionService, HttpOrderSubmissionServi
     (provider, client) => {
         client.BaseAddress = new Uri(provider.GetService<IConfiguration>()?["ApiConfigs:Ordering:Uri"] ?? throw new InvalidOperationException("Missing config"));
     });
+
+// Adding Metrics
+builder.Services.AddHttpClient(Options.DefaultName)
+    .UseHttpClientMetrics();
 
 // Adding Health Checks
 builder.Services.AddHealthChecks()
@@ -47,6 +53,10 @@ if (!app.Environment.IsDevelopment())
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
+
+app.UseHttpMetrics();
+app.UseMetricServer();
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=ConcertCatalog}/{action=Index}/{id?}");
@@ -65,5 +75,8 @@ app.MapHealthChecks("/health/liveness",
         Predicate = _ => true,
         ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
     });
+
+// IS this needed?
+//app.UseEndpoints(endpoints => endpoints.MapMetrics());
 
 app.Run();
