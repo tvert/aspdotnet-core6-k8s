@@ -1,0 +1,24 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: frontend-hpa
+  namespace: jowebapp
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+  #  apiVersion: apiextensions.k8s.io/v1
+    kind: Deployment
+    name: frontend
+  minReplicas: 1
+  maxReplicas: 3
+  metrics:
+  - type: Pods
+    #pods:
+    #  metricName: "jowebapp_frontend_home_page_visits"
+    #  averageValue: 20
+    pods:
+      metric:
+        name: jowebapp_frontend_home_page_visits
+      target:
+        type: AverageValue
+        averageValue: 20

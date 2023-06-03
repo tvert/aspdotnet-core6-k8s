@@ -1,0 +1,21 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+ name: frontend-keda
+ namespace: jowebapp
+spec:
+ scaleTargetRef:
+   kind: Deployment
+   name: frontend
+ minReplicaCount: 1
+ maxReplicaCount: 3
+ cooldownPeriod: 30
+ pollingInterval: 1
+ triggers:
+ - type: prometheus
+   metadata:
+     serverAddress: http://prometheus-operated.observability:9090
+     metricName: jowebapp_frontend_home_page_visits)_keda
+     query: |
+       avg(jowebapp_frontend_home_page_visits)
+     threshold: "20"
