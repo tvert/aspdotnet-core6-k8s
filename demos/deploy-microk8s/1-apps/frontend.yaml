@@ -36,7 +36,8 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: jorndk8s.azurecr.io/frontend
+        #image: jorndk8s.azurecr.io/frontend
+        image: jocontainerregistry.azurecr.io/frontend
         resources:
           requests:
             memory: "500Mi"

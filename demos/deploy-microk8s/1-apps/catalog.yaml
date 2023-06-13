@@ -36,7 +36,8 @@ spec:
     spec:
       containers:
       - name: catalog
-        image: jorndk8s.azurecr.io/catalog
+        #image: jorndk8s.azurecr.io/catalog
+        image: jocontainerregistry.azurecr.io/catalog
         resources:
           requests:
             memory: "500Mi"
